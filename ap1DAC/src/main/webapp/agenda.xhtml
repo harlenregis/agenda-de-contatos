@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>Agenda Telefônica</title>
+</h:head>
+<h:body>
+	<h:form id="formulario">
+		<p:growl id="messages" showDetail="true" closable="true">
+			<p:autoUpdate/>
+		</p:growl>
+		<p:commandButton value="Voltar" action="index"/>
+		<p:panel header="Cadastro de Contatos">
+		
+			<p:dataTable value="#{contatoBean.contatos}" var="c">
+				<p:column headerText="Id">
+					<p:outputLabel value="#{c.id}"/>
+				</p:column>			
+
+				<p:column headerText="Nome">
+					<p:outputLabel value="#{c.nome}" />
+				</p:column>		
+				
+				<p:column headerText="Telefone">
+					<p:outputLabel value="#{c.telefone}" />
+				</p:column>		
+			
+				<p:column headerText="Data Nascimento">
+					<p:outputLabel value="#{c.dataNascimento}"/>
+				</p:column>		
+			
+				<p:column headerText="E-Mail">
+					<p:outputLabel value="#{c.email}"/>
+				</p:column>		
+			
+				<p:column headerText="Tipo">
+					<p:outputLabel value="#{c.tipo}"/>
+				</p:column>		
+				
+					
+				<p:column headerText="Editar">
+					<p:commandLink value="Editar" action="editar" ajax="false">
+						<f:setPropertyActionListener value="#{c}" target="#{contatoBean.contato}"/>
+					</p:commandLink>
+				</p:column>
+
+				<p:column headerText="Excluir">
+					<p:commandLink value="Excluir" action="#{contatoBean.excluir}" ajax="false">
+						<f:setPropertyActionListener value="#{c}" target="#{contatoBean.contato}"/>
+					</p:commandLink>
+				</p:column>
+
+				<p:column headerText="Ligar">
+					<p:commandButton value="Chamar" oncomplete="PF('detalheContato').show()" process="@this" update="detalhe">
+						<f:setPropertyActionListener value="#{c}" target="#{contatoBean.contato}"/>
+					</p:commandButton>
+				 </p:column>
+					
+			
+			
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+		<p:dialog header="Ligação em andamento para" modal="true" height="400" width="400" widgetVar="detalheContato">
+			<h:form id="detalhe" title="Tela de Chamda">
+				<h:panelGrid columns="2" >
+					<p:outputLabel value="Nome: "/>
+					<h:outputText value="#{contatoBean.contato.nome}"/>
+					<h:outputLabel value="Telefone: "/>
+					<h:outputText value="#{contatoBean.contato.telefone}"/>
+				</h:panelGrid> 
+			</h:form>
+		</p:dialog>
+
+</h:body>
+
+
+</html>
