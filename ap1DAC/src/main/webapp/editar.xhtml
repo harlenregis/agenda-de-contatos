@@ -15,7 +15,8 @@
 			<p:autoUpdate/>
 		</p:messages>
 		
-		<p:panel header="Cadastro de Contatos">
+		<p:panel header="Editar Contatos">
+		<h:inputHidden value="#{contatoBean.contato.id}"/>
 			<p:panelGrid columns="3">
 			
 				<p:outputLabel value="Nome " for="nome"/>
